@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PRINTING
+  FINISHED
+  SHIPPED
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+enum ModelFormat {
+  STL
+  OBJ
+  GLTF
+  GLB
+  THREE_MF
+}
+
+enum PrintQuality {
+  DRAFT
+  STANDARD
+  HIGH
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(CUSTOMER)
+  avatar    String?
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  models Model3D[]
+  orders Order[]
+
+  @@map("users")
+}
+
+model Model3D {
+  id           String      @id @default(cuid())
+  slug         String      @unique
+  name         String
+  description  String?
+  format       ModelFormat
+  fileKey      String
+  thumbnailKey String?
+  dimensionX   Float?
+  dimensionY   Float?
+  dimensionZ   Float?
+  volumeCm3    Float?
+  category     String?
+  isSample     Boolean     @default(false)
+  isFeatured   Boolean     @default(false)
+  fileSizeBytes Int?
+  userId       String?
+  user         User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  orderItems OrderItem[]
+
+  @@map("models")
+}
+
+model Material {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+  density     Float
+  costPerGram Float
+  colors      Json    @default("[]")
+  properties  Json?
+  isActive    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems OrderItem[]
+
+  @@map("materials")
+}
+
+model PricingRule {
+  id                String  @id @default(cuid())
+  name              String  @unique
+  machineCostPerHour Float
+  markupPercent     Float
+  minimumPrice      Float   @default(5.0)
+  isActive          Boolean @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("pricing_rules")
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status          OrderStatus @default(PENDING)
+  totalAmount     Float
+  shippingAddress Json?
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  items    OrderItem[]
+  payments Payment[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id            String       @id @default(cuid())
+  orderId       String
+  order         Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  modelId       String
+  model         Model3D      @relation(fields: [modelId], references: [id])
+  materialId    String
+  material      Material     @relation(fields: [materialId], references: [id])
+  colorHex      String       @default("#CCCCCC")
+  quality       PrintQuality @default(STANDARD)
+  infillPercent Int          @default(20)
+  quantity      Int          @default(1)
+  unitPrice     Float
+  totalPrice    Float
+  createdAt     DateTime     @default(now())
+
+  @@map("order_items")
+}
+
+model Payment {
+  id                    String        @id @default(cuid())
+  orderId               String
+  order                 Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  stripePaymentIntentId String        @unique
+  amount                Float
+  currency              String        @default("usd")
+  status                PaymentStatus @default(PENDING)
+  paidAt                DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  @@map("payments")
+}
