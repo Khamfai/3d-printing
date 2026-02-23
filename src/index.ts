@@ -44,9 +44,7 @@ const app = new Elysia()
   .use(apiRoutes)
   .listen(env.PORT);
 
-console.log(
-  `🖨️  3D Printing API running at http://${app.server?.hostname}:${app.server?.port}`
-);
+console.log(`🖨️  3D Printing API running at http://${app.server?.hostname}:${app.server?.port}`);
 console.log(`📖 Swagger docs at http://${app.server?.hostname}:${app.server?.port}/swagger`);
 
 export type App = typeof app;

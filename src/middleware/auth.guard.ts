@@ -3,7 +3,6 @@ import { bearer } from "@elysiajs/bearer";
 import { jwt } from "@elysiajs/jwt";
 import { env } from "../config/env";
 import { UnauthorizedError } from "../utils/error-handler";
-import type { JWTPayload } from "../types";
 
 export const jwtPlugin = new Elysia({ name: "jwt-plugin" }).use(
   jwt({

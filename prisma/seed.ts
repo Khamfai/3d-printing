@@ -1,5 +1,5 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../src/generated/prisma";
+import { PrismaClient } from "../src/generated/prisma/client";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
@@ -45,7 +45,8 @@ async function main() {
     update: {},
     create: {
       name: "PLA",
-      description: "Polylactic Acid - Most popular 3D printing material. Biodegradable, easy to print.",
+      description:
+        "Polylactic Acid - Most popular 3D printing material. Biodegradable, easy to print.",
       density: 1.24,
       costPerGram: 0.025,
       colors: [
@@ -67,7 +68,8 @@ async function main() {
     update: {},
     create: {
       name: "ABS",
-      description: "Acrylonitrile Butadiene Styrene - Durable, heat-resistant. Used in automotive parts.",
+      description:
+        "Acrylonitrile Butadiene Styrene - Durable, heat-resistant. Used in automotive parts.",
       density: 1.04,
       costPerGram: 0.03,
       colors: [
@@ -103,7 +105,8 @@ async function main() {
     update: {},
     create: {
       name: "TPU",
-      description: "Thermoplastic Polyurethane - Flexible, rubber-like. Great for phone cases, seals.",
+      description:
+        "Thermoplastic Polyurethane - Flexible, rubber-like. Great for phone cases, seals.",
       density: 1.21,
       costPerGram: 0.045,
       colors: [
@@ -149,24 +152,32 @@ async function main() {
     {
       slug: "benchy-boat",
       name: "Benchy Boat",
-      description: "Classic 3D printing benchmark model. Tests overhangs, bridging, and fine details.",
+      description:
+        "Classic 3D printing benchmark model. Tests overhangs, bridging, and fine details.",
       format: "STL" as const,
       fileKey: "samples/benchy-boat.stl",
-      dimensionX: 60, dimensionY: 48, dimensionZ: 31,
+      dimensionX: 60,
+      dimensionY: 48,
+      dimensionZ: 31,
       volumeCm3: 15.5,
       category: "Benchmark",
-      isSample: true, isFeatured: true,
+      isSample: true,
+      isFeatured: true,
     },
     {
       slug: "gear-set",
       name: "Mechanical Gear Set",
-      description: "Interlocking gear system with precise teeth. Demonstrates mechanical printing capability.",
+      description:
+        "Interlocking gear system with precise teeth. Demonstrates mechanical printing capability.",
       format: "STL" as const,
       fileKey: "samples/gear-set.stl",
-      dimensionX: 80, dimensionY: 80, dimensionZ: 15,
+      dimensionX: 80,
+      dimensionY: 80,
+      dimensionZ: 15,
       volumeCm3: 22.3,
       category: "Mechanical",
-      isSample: true, isFeatured: true,
+      isSample: true,
+      isFeatured: true,
     },
     {
       slug: "phone-stand",
@@ -174,21 +185,28 @@ async function main() {
       description: "Ergonomic phone stand with adjustable angle. Functional and practical design.",
       format: "STL" as const,
       fileKey: "samples/phone-stand.stl",
-      dimensionX: 100, dimensionY: 80, dimensionZ: 120,
+      dimensionX: 100,
+      dimensionY: 80,
+      dimensionZ: 120,
       volumeCm3: 45.0,
       category: "Functional",
-      isSample: true, isFeatured: true,
+      isSample: true,
+      isFeatured: true,
     },
     {
       slug: "dragon-figurine",
       name: "Dragon Figurine",
-      description: "Detailed dragon sculpture with intricate scales and wings. Great display piece.",
+      description:
+        "Detailed dragon sculpture with intricate scales and wings. Great display piece.",
       format: "STL" as const,
       fileKey: "samples/dragon-figurine.stl",
-      dimensionX: 120, dimensionY: 80, dimensionZ: 150,
+      dimensionX: 120,
+      dimensionY: 80,
+      dimensionZ: 150,
       volumeCm3: 85.0,
       category: "Art",
-      isSample: true, isFeatured: true,
+      isSample: true,
+      isFeatured: true,
     },
     {
       slug: "vase-spiral",
@@ -196,10 +214,13 @@ async function main() {
       description: "Elegant spiral vase printed in vase mode. Watertight with beautiful geometry.",
       format: "STL" as const,
       fileKey: "samples/vase-spiral.stl",
-      dimensionX: 80, dimensionY: 80, dimensionZ: 200,
+      dimensionX: 80,
+      dimensionY: 80,
+      dimensionZ: 200,
       volumeCm3: 35.0,
       category: "Home Decor",
-      isSample: true, isFeatured: true,
+      isSample: true,
+      isFeatured: true,
     },
     {
       slug: "chess-set",
@@ -207,10 +228,13 @@ async function main() {
       description: "Complete Staunton-style chess set. Classic design with excellent printability.",
       format: "OBJ" as const,
       fileKey: "samples/chess-set.obj",
-      dimensionX: 45, dimensionY: 45, dimensionZ: 95,
+      dimensionX: 45,
+      dimensionY: 45,
+      dimensionZ: 95,
       volumeCm3: 28.0,
       category: "Games",
-      isSample: true, isFeatured: true,
+      isSample: true,
+      isFeatured: true,
     },
     {
       slug: "raspberry-pi-case",
@@ -218,10 +242,13 @@ async function main() {
       description: "Snap-fit case for Raspberry Pi 4 with ventilation slots and port access.",
       format: "STL" as const,
       fileKey: "samples/raspberry-pi-case.stl",
-      dimensionX: 90, dimensionY: 65, dimensionZ: 30,
+      dimensionX: 90,
+      dimensionY: 65,
+      dimensionZ: 30,
       volumeCm3: 18.0,
       category: "Electronics",
-      isSample: true, isFeatured: false,
+      isSample: true,
+      isFeatured: false,
     },
     {
       slug: "low-poly-fox",
@@ -229,10 +256,13 @@ async function main() {
       description: "Charming low-poly fox sculpture. Easy to print, no supports needed.",
       format: "GLB" as const,
       fileKey: "samples/low-poly-fox.glb",
-      dimensionX: 60, dimensionY: 40, dimensionZ: 70,
+      dimensionX: 60,
+      dimensionY: 40,
+      dimensionZ: 70,
       volumeCm3: 20.0,
       category: "Art",
-      isSample: true, isFeatured: false,
+      isSample: true,
+      isFeatured: false,
     },
   ];
 

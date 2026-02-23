@@ -2,7 +2,7 @@ import { prisma } from "../db/prisma";
 import { NotFoundError, ValidationError, ForbiddenError } from "../utils/error-handler";
 import type { CreateOrderDTO, UpdateOrderStatusDTO, PaginationDTO } from "../types";
 import { pricingService } from "./pricing.service";
-import type { OrderStatus } from "../generated/prisma";
+import type { OrderStatus } from "../generated/prisma/enums";
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
   PENDING: ["PAID", "CANCELLED"],

@@ -3,7 +3,10 @@ import { NotFoundError } from "../utils/error-handler";
 import type { CreateModelDTO, PaginationDTO } from "../types";
 
 export class ModelService {
-  async getAll(pagination: PaginationDTO, filters?: { category?: string; isSample?: boolean; isFeatured?: boolean }) {
+  async getAll(
+    pagination: PaginationDTO,
+    filters?: { category?: string; isSample?: boolean; isFeatured?: boolean }
+  ) {
     const { page, limit, search, order } = pagination;
     const skip = (page - 1) * limit;
 

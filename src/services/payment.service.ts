@@ -54,11 +54,7 @@ export class PaymentService {
       throw new ValidationError("Stripe webhook not configured");
     }
 
-    const event = stripe.webhooks.constructEvent(
-      payload,
-      signature,
-      env.STRIPE_WEBHOOK_SECRET
-    );
+    const event = stripe.webhooks.constructEvent(payload, signature, env.STRIPE_WEBHOOK_SECRET);
 
     switch (event.type) {
       case "payment_intent.succeeded": {

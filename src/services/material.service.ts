@@ -7,9 +7,7 @@ export class MaterialService {
     const { page, limit, search, order } = pagination;
     const skip = (page - 1) * limit;
 
-    const where = search
-      ? { name: { contains: search, mode: "insensitive" as const } }
-      : {};
+    const where = search ? { name: { contains: search, mode: "insensitive" as const } } : {};
 
     const [materials, total] = await Promise.all([
       prisma.material.findMany({

@@ -40,10 +40,14 @@ export const createMaterialSchema = z.object({
   description: z.string().optional(),
   density: z.number().positive(),
   costPerGram: z.number().positive(),
-  colors: z.array(z.object({
-    name: z.string(),
-    hex: z.string().regex(/^#[0-9a-fA-F]{6}$/),
-  })).optional(),
+  colors: z
+    .array(
+      z.object({
+        name: z.string(),
+        hex: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+      })
+    )
+    .optional(),
   properties: z.record(z.unknown()).optional(),
 });
 
@@ -56,7 +60,10 @@ export type UpdateMaterialDTO = z.infer<typeof updateMaterialSchema>;
 export const createOrderItemSchema = z.object({
   modelId: z.string(),
   materialId: z.string(),
-  colorHex: z.string().regex(/^#[0-9a-fA-F]{6}$/).default("#CCCCCC"),
+  colorHex: z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/)
+    .default("#CCCCCC"),
   quality: z.enum(["DRAFT", "STANDARD", "HIGH"]).default("STANDARD"),
   infillPercent: z.number().min(5).max(100).default(20),
   quantity: z.number().int().min(1).default(1),
@@ -64,13 +71,15 @@ export const createOrderItemSchema = z.object({
 
 export const createOrderSchema = z.object({
   items: z.array(createOrderItemSchema).min(1),
-  shippingAddress: z.object({
-    street: z.string(),
-    city: z.string(),
-    state: z.string(),
-    postalCode: z.string(),
-    country: z.string(),
-  }).optional(),
+  shippingAddress: z
+    .object({
+      street: z.string(),
+      city: z.string(),
+      state: z.string(),
+      postalCode: z.string(),
+      country: z.string(),
+    })
+    .optional(),
   notes: z.string().optional(),
 });
 

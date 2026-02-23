@@ -13,9 +13,13 @@ export const paymentRoutes = new Elysia({ prefix: "/payments" })
   })
   // Authenticated routes
   .use(authGuard)
-  .post("/create-intent", async ({ body, user }) => {
-    const result = await paymentService.createPaymentIntent(body.orderId, user.id);
-    return success(result, "Payment intent created");
-  }, {
-    body: t.Object({ orderId: t.String() }),
-  });
+  .post(
+    "/create-intent",
+    async ({ body, user }) => {
+      const result = await paymentService.createPaymentIntent(body.orderId, user.id);
+      return success(result, "Payment intent created");
+    },
+    {
+      body: t.Object({ orderId: t.String() }),
+    }
+  );

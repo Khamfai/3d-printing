@@ -4,7 +4,10 @@ import { env } from "../config/env";
 const resend = env.RESEND_API_KEY ? new Resend(env.RESEND_API_KEY) : null;
 
 export class EmailService {
-  async sendOrderConfirmation(to: string, data: { orderId: string; total: number; itemCount: number }) {
+  async sendOrderConfirmation(
+    to: string,
+    data: { orderId: string; total: number; itemCount: number }
+  ) {
     if (!resend) {
       console.log(`[Email Mock] Order confirmation to ${to}:`, data);
       return;

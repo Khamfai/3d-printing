@@ -1,11 +1,11 @@
 interface PricingInput {
   volumeCm3: number;
-  materialDensity: number;      // g/cm3
-  materialCostPerGram: number;  // $/gram
-  infillPercent: number;        // 5-100
+  materialDensity: number; // g/cm3
+  materialCostPerGram: number; // $/gram
+  infillPercent: number; // 5-100
   quality: "DRAFT" | "STANDARD" | "HIGH";
-  machineCostPerHour: number;   // $/hour
-  markupPercent: number;        // e.g., 30 for 30%
+  machineCostPerHour: number; // $/hour
+  markupPercent: number; // e.g., 30 for 30%
   minimumPrice: number;
   quantity: number;
 }
@@ -20,15 +20,15 @@ interface PricingResult {
 }
 
 const LAYER_HEIGHT_MAP: Record<string, number> = {
-  DRAFT: 0.3,     // mm
-  STANDARD: 0.2,  // mm
-  HIGH: 0.1,      // mm
+  DRAFT: 0.3, // mm
+  STANDARD: 0.2, // mm
+  HIGH: 0.1, // mm
 };
 
 const PRINT_SPEED_MAP: Record<string, number> = {
-  DRAFT: 60,      // mm/s
-  STANDARD: 45,   // mm/s
-  HIGH: 30,       // mm/s
+  DRAFT: 60, // mm/s
+  STANDARD: 45, // mm/s
+  HIGH: 30, // mm/s
 };
 
 export function calculatePrice(input: PricingInput): PricingResult {
@@ -46,7 +46,7 @@ export function calculatePrice(input: PricingInput): PricingResult {
 
   // Calculate effective volume (infill reduces interior volume)
   // Assume ~10% of volume is shell (always 100% fill), rest is infill
-  const shellPercent = 0.10;
+  const shellPercent = 0.1;
   const effectiveVolume = volumeCm3 * (shellPercent + (1 - shellPercent) * (infillPercent / 100));
 
   // Material cost
