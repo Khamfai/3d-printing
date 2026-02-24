@@ -28,7 +28,7 @@ export function HeroSection() {
               </Button>
             </Link>
             <Link href="/gallery">
-              <Button size="lg" variant="outline" className="border-brand-300 text-white hover:bg-brand-600">
+              <Button size="lg" variant="outline" className="border-brand-300 bg-transparent text-white hover:bg-brand-600">
                 Browse Gallery
               </Button>
             </Link>

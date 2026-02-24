@@ -1,5 +1,5 @@
 import { prisma } from "../db/prisma";
-import { ConflictError, UnauthorizedError } from "../utils/error-handler";
+import { BadRequestError, ConflictError, UnauthorizedError } from "../utils/error-handler";
 import type { RegisterDTO, LoginDTO } from "../types";
 
 export class AuthService {
@@ -40,12 +40,12 @@ export class AuthService {
       where: { email: data.email },
     });
     if (!user) {
-      throw new UnauthorizedError("Invalid email or password");
+      throw new BadRequestError("Invalid email or password");
     }
 
     const valid = await Bun.password.verify(data.password, user.password);
     if (!valid) {
-      throw new UnauthorizedError("Invalid email or password");
+      throw new BadRequestError("Invalid email or password");
     }
 
     return {

@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "Bash(bun run format:*)",
-      "Bash(bunx pm2:*)"
+      "Bash(bunx pm2:*)",
+      "Bash(bunx prisma migrate dev:*)",
+      "Bash(bun -e:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "Bash(bun run:*)",
+      "Bash(curl:*)",
+      "Bash(ls:*)"
     ]
   }
 }

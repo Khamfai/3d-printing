@@ -124,7 +124,7 @@ export function Navbar() {
             {isAuthenticated ? (
               <>
                 <Link href="/dashboard" className="block py-2 text-sm font-medium text-gray-600">Dashboard</Link>
-                <button onClick={logout} className="block py-2 text-sm font-medium text-red-600">Logout</button>
+                <button onClick={() => { logout(); localStorage.removeItem("auth-token"); }} className="block py-2 text-sm font-medium text-red-600">Logout</button>
               </>
             ) : (
               <>

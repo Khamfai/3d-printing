@@ -31,7 +31,7 @@ function loadEnv(): Env {
       console.warn("Running with fallback defaults for development...");
       return envSchema.parse({
         ...process.env,
-        DATABASE_URL: process.env.DATABASE_URL || "postgresql://localhost:5432/printing3d",
+        DATABASE_URL: process.env.DATABASE_URL || "postgresql://postgres:123456@localhost:5432/printing3d",
         JWT_SECRET: process.env.JWT_SECRET || "dev-jwt-secret-change-in-production",
         JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || "dev-refresh-secret-change-in-prod",
       });

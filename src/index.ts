@@ -4,6 +4,7 @@ import { swagger } from "@elysiajs/swagger";
 import { env } from "./config/env";
 import { errorHandler } from "./utils/error-handler";
 import { apiRoutes } from "./routes";
+import { logger } from "./lib/logger";
 
 const app = new Elysia()
   .use(
@@ -34,6 +35,12 @@ const app = new Elysia()
     })
   )
   .use(errorHandler)
+  .onAfterResponse(({ request, set }) => {
+    const url = new URL(request.url);
+    logger.info(
+      `${request.headers.get("x-forwarded-for") || request.ip || request.headers.get("origin") || "unknown"} - ${request.method} ${url.pathname} - ${set.status || 200}`
+    );
+  })
   .get("/", () => ({
     name: "3D Printing Service API",
     version: "1.0.0",
@@ -44,7 +51,7 @@ const app = new Elysia()
   .use(apiRoutes)
   .listen(env.PORT);
 
-console.log(`🖨️  3D Printing API running at http://${app.server?.hostname}:${app.server?.port}`);
-console.log(`📖 Swagger docs at http://${app.server?.hostname}:${app.server?.port}/swagger`);
+logger.info(`3D Printing API running at http://${app.server?.hostname}:${app.server?.port}`);
+logger.info(`Swagger docs at http://${app.server?.hostname}:${app.server?.port}/swagger`);
 
 export type App = typeof app;

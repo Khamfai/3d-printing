@@ -14,7 +14,7 @@ async function main() {
   });
   const admin = await prisma.user.upsert({
     where: { email: "admin@printing3d.com" },
-    update: {},
+    update: { password: adminPassword },
     create: {
       email: "admin@printing3d.com",
       name: "Admin",
@@ -30,7 +30,7 @@ async function main() {
   });
   const customer = await prisma.user.upsert({
     where: { email: "customer@example.com" },
-    update: {},
+    update: { password: customerPassword },
     create: {
       email: "customer@example.com",
       name: "Test Customer",

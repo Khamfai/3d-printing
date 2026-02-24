@@ -1,4 +1,4 @@
-interface PricingInput {
+export interface PricingInput {
   volumeCm3: number;
   materialDensity: number; // g/cm3
   materialCostPerGram: number; // $/gram
@@ -10,7 +10,7 @@ interface PricingInput {
   quantity: number;
 }
 
-interface PricingResult {
+export interface PricingResult {
   materialCost: number;
   timeCost: number;
   subtotal: number;
